@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>music</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="music" id='music'>
+            <div class="search">
+                <img src="./images/music.png" alt="" class="logo">
+                <input type="text" v-model='keywords' @keyup.enter='search'>
+            </div>
+            <div class="center">
+                <div class="list">
+                    <ul>
+                        <li v-for='item in list'>
+                            <span class="sing" @click='playmusic(item.id)'></span>
+                            <span class="title" :title="item.name">{{item.name}}</span>
+                            <span class="mv" @click='playmv(item.mvid)'></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="play">
+                    <img src="./images/player_bar.png" alt="" class="bar" :class='{barplaying:musicplaying}'>
+                    <img src="./images/disc.png" alt="" class="disc" :class='{discplaying:musicplaying}'>
+                    <img :src="picurl?picurl:'images/cover.jpg'" alt="" class="cover">
+                </div>
+                <div class="reaction">
+                    <p>热门留言</p>
+                    <dl v-for='item in hotcomments'>
+                        <dt>
+                            <img :src="item.user.avatarUrl" class="upic" alt="">
+                        </dt>
+                        <dd>
+                            <span class="uname">{{item.user.nickname}}</span>
+                        </dd>
+                        <dd>
+                            <span class="content">
+                                {{item.content}}
+                            </span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="footer">
+                <audio :src="musicurl" controls autoplay @play='play' @pause='pause'></audio>
+            </div>
+            <div class="video" v-if='playingmv'>
+                <video :src="mvurl" controls autoplay></video>
+                <div class="mask" @click='stopmv'></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="index.js"></script>
+    
+</body>
+
+</html>
